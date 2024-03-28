@@ -1,14 +1,55 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-    <meta charset='UTF-8'>
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>NYTPRJ</title>
-    <link rel='stylesheet' href='style.css'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min Landing Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Welcome to NYTPRJ</h1>
-    
-    <script src='script.js'></script>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#home">Hjem</a></li>
+                <li><a href="#about">Om</a></li>
+                <li><a href="#contact">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h1>Velkommen til min landing page</h1>
+            <p>Dette er en flot og responsiv landing page med en GIF-fil.</p>
+            <img src="renewable_energy_capacity_animation_chessboard_mixed_simple_icons_frame_final.gif" alt="Renewable Energy GIF">
+        </section>
+
+        <section id="about">
+            <h2>Om os</h2>
+            <p>Vi er en virksomhed, der er dedikeret til at skabe fantastiske landing pages med GIF-filer.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Kontakt os</h2>
+            <form>
+                <label for="name">Navn:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Besked:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Min Landing Page. Alle rettigheder forbeholdes.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
