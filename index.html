@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Min Landing Page</title>
+    <title>Grøn Investeringsfond</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +11,8 @@
         <nav>
             <ul>
                 <li><a href="#home">Hjem</a></li>
-                <li><a href="#about">Om</a></li>
+                <li><a href="#about">Om os</a></li>
+                <li><a href="#invest">Invester</a></li>
                 <li><a href="#contact">Kontakt</a></li>
             </ul>
         </nav>
@@ -19,18 +20,24 @@
 
     <main>
         <section id="home">
-            <h1>Velkommen til min landing page</h1>
-            <p>Dette er en flot og responsiv landing page med en GIF-fil.</p>
-            <img src="renewable_energy_capacity_animation_chessboard_mixed_simple_icons_frame_final.gif" alt="Renewable Energy GIF">
+            <div class="hero-content">
+                <h1>Velkommen til vores grønne investeringsfond</h1>
+                <p>Vi er dedikeret til at investere i bæredygtige og miljøvenlige projekter.</p>
+                <a href="#invest" class="cta-button">Invester nu</a>
+            </div>
+            <div class="hero-image">
+                <img src="renewable_energy_capacity_animation_chessboard_mixed_simple_icons_frame_final.gif" alt="Renewable Energy GIF">
+            </div>
         </section>
 
         <section id="about">
             <h2>Om os</h2>
-            <p>Vi er en virksomhed, der er dedikeret til at skabe fantastiske landing pages med GIF-filer.</p>
+            <p>Vi er en venturevirksomhed, der fokuserer på at investere i grønne og bæredygtige projekter. Vores mål er at skabe positiv indvirkning på miljøet og samtidig generere attraktive afkast til vores investorer.</p>
         </section>
 
-        <section id="contact">
-            <h2>Kontakt os</h2>
+        <section id="invest">
+            <h2>Invester i fremtiden</h2>
+            <p>Ved at investere i vores grønne investeringsfond er du med til at støtte bæredygtige projekter og skabe en bedre fremtid for vores planet. Udfyld formularen herunder for at få mere information om, hvordan du kan investere.</p>
             <form>
                 <label for="name">Navn:</label>
                 <input type="text" id="name" name="name" required>
@@ -38,16 +45,26 @@
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
 
-                <label for="message">Besked:</label>
-                <textarea id="message" name="message" required></textarea>
+                <label for="investment">Investeringsbeløb:</label>
+                <input type="number" id="investment" name="investment" required>
 
-                <button type="submit">Send</button>
+                <button type="submit">Send forespørgsel</button>
             </form>
+        </section>
+
+        <section id="contact">
+            <h2>Kontakt os</h2>
+            <p>Hvis du har spørgsmål eller ønsker at vide mere om vores grønne investeringsfond, er du velkommen til at kontakte os.</p>
+            <ul>
+                <li>Email: info@greeninvestmentfund.com</li>
+                <li>Telefon: +45 12 34 56 78</li>
+                <li>Adresse: Grøn Allé 123, 1234 Bæredygtig By, Danmark</li>
+            </ul>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2023 Min Landing Page. Alle rettigheder forbeholdes.</p>
+        <p>&copy; 2023 Grøn Investeringsfond. Alle rettigheder forbeholdes.</p>
     </footer>
 
     <script src="script.js"></script>
