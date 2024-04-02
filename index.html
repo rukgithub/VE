@@ -3,53 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix Experience</title>
+<title>Matrix Landing Page</title>
 <style>
   body, html {
-    margin: 0;
-    padding: 0;
     height: 100%;
-    background: black;
+    margin: 0;
     font-family: 'Courier New', monospace;
-    overflow-x: hidden;
+    background-color: black;
   }
-  
   .bg {
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
     position: relative;
-    text-align: center;
     color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
   }
 
-  /* Style for the glittering Matrix gif */
-  .matrix-gif {
+  /* Add the blur effect */
+  .bg::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
     width: 100%;
-    height: auto;
+    background-image: url('https://rukgithub.github.io/VE/matrix_glitter.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(8px);
+    z-index: -1;
   }
 
-  /* Style for the static Matrix png */
-  .matrix-png {
-    width: 100%;
-    height: auto;
-    margin-top: 20px; /* spacing between the images */
+  .content {
+    z-index: 1;
   }
 
-  @media (max-width: 768px) {
-    .bg {
-      padding: 50px 0;
-    }
-    .matrix-png {
-      margin-top: 10px;
-    }
+  .content h1 {
+    font-size: 50px;
   }
 </style>
 </head>
 <body>
 
 <div class="bg">
-  <!-- GIF will automatically loop -->
-  <img class="matrix-gif" src="https://rukgithub.github.io/VE/matrix_glitter.gif" alt="Matrix Glitter">
-  <!-- PNG below the GIF -->
-  <img class="matrix-png" src="https://rukgithub.github.io/VE/matrix_pattern.png" alt="Matrix Pattern">
+  <div class="content">
+    <h1>Welcome to the Matrix</h1>
+  </div>
 </div>
 
 </body>
