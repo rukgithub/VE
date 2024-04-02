@@ -1,65 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matrix Landing Page</title>
-<style>
-  body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Courier New', monospace;
-    background-color: black;
-  }
-  .bg {
-    /* Full height */
-    height: 100%;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matrix Landing Page</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background-color: black;
+      overflow: hidden; /* Prevent scrollbars */
+    }
 
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: relative;
-    color: white;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
+    .bg {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      color: #00ff00; /* Green color for the text */
+      text-shadow: 0 0 10px #00ff00; /* Green text glow */
+      animation: textFlicker 2s infinite alternate; /* Add text flickering animation */
+    }
 
-  /* Add the blur effect */
-  .bg::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background-image: url('https://rukgithub.github.io/VE/matrix_glitter.gif');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    filter: blur(8px);
-    z-index: -1;
-  }
+    .bg::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      background: url('https://rukgithub.github.io/VE/matrix_glitter.gif') center/cover no-repeat;
+      animation: bgFlicker 2s infinite alternate; /* Add background flickering animation */
+    }
 
-  .content {
-    z-index: 1;
-  }
+    @keyframes textFlicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
 
-  .content h1 {
-    font-size: 50px;
-  }
-</style>
+    @keyframes bgFlicker {
+      0% { opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+
+    .content h1 {
+      font-size: 50px;
+      z-index: 1;
+    }
+  </style>
 </head>
 <body>
-
-<div class="bg">
-  <div class="content">
-    <h1>Welcome to the Matrix</h1>
+  <div class="bg">
+    <div class="content">
+      <h1>Welcome to the Matrix</h1>
+    </div>
   </div>
-</div>
-
 </body>
 </html>
