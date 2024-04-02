@@ -6,50 +6,50 @@
 <title>Matrix Experience</title>
 <style>
   body, html {
-    height: 100%;
     margin: 0;
+    padding: 0;
+    height: 100%;
+    background: black;
     font-family: 'Courier New', monospace;
-    background-color: black;
-    color: white;
-    text-align: center;
+    overflow-x: hidden;
   }
   
-  .image-container {
+  .bg {
     position: relative;
+    text-align: center;
+    color: white;
+  }
+
+  /* Style for the glittering Matrix gif */
+  .matrix-gif {
     width: 100%;
-    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    height: auto;
   }
 
-  .responsive-image {
-    position: absolute;
-    top: 0;
-    left: 0;
+  /* Style for the static Matrix png */
+  .matrix-png {
     width: 100%;
-    height: 100%;
-    object-fit: cover; /* Resize the background image to cover the entire container */
+    height: auto;
+    margin-top: 20px; /* spacing between the images */
   }
 
-  .section {
-    margin: 20px;
-    padding: 20px;
-  }
-
-  @media screen and (max-width: 768px) {
-    .section {
-      margin: 10px;
-      padding: 10px;
+  @media (max-width: 768px) {
+    .bg {
+      padding: 50px 0;
+    }
+    .matrix-png {
+      margin-top: 10px;
     }
   }
 </style>
 </head>
 <body>
 
-<div class="image-container">
-  <img src="https://rukgithub.github.io/VE/matrix_glitter.gif" alt="Matrix Glitter" class="responsive-image">
-</div>
-
-<div class="section">
-  <img src="https://rukgithub.github.io/VE/matrix_pattern.png" alt="Matrix Pattern" class="responsive-image">
+<div class="bg">
+  <!-- GIF will automatically loop -->
+  <img class="matrix-gif" src="https://rukgithub.github.io/VE/matrix_glitter.gif" alt="Matrix Glitter">
+  <!-- PNG below the GIF -->
+  <img class="matrix-png" src="https://rukgithub.github.io/VE/matrix_pattern.png" alt="Matrix Pattern">
 </div>
 
 </body>
