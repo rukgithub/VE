@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OECD Rapport om Danmarks Økonomi Quiz - Forbedret Sci-Fi Edition</title>
+    <title>OECD Rapport om Danmarks Økonomi Quiz - Forbedret Sci-Fi Edition med Musik</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -94,6 +94,15 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        .music-control {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 50, 0, 0.8);
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -104,6 +113,15 @@
         </div>
         <div id="quiz"></div>
     </div>
+
+    <div class="music-control" onclick="toggleMusic()">
+        <span id="musicIcon">🔇</span> Musik
+    </div>
+
+    <audio id="backgroundMusic" loop>
+        <source src="starts.mp3" type="audio/mpeg">
+        Din browser understøtter ikke lydelementet.
+    </audio>
 
     <script>
         const questions = [
@@ -137,6 +155,9 @@
         let currentQuestion = 0;
         let score = 0;
         let quizEnded = false;
+        let musicPlaying = false;
+        const music = document.getElementById('backgroundMusic');
+        const musicIcon = document.getElementById('musicIcon');
 
         function renderQuestion() {
             const quizContainer = document.getElementById('quiz');
@@ -156,6 +177,7 @@
 
             quizContainer.innerHTML = html;
             updateProgressBar();
+            if (musicPlaying) music.play();
         }
 
         function selectAnswer(index) {
@@ -211,7 +233,20 @@
             progressBar.style.width = `${progress}%`;
         }
 
+        function toggleMusic() {
+            if (musicPlaying) {
+                music.pause();
+                musicIcon.textContent = '🔇';
+            } else {
+                music.play();
+                musicIcon.textContent = '🔊';
+            }
+            musicPlaying = !musicPlaying;
+        }
+
         renderQuestion();
+
+        document.body.addEventListener('click', function() { if (!musicPlaying) toggleMusic(); }, { once: true });
     </script>
 </body>
 </html>
