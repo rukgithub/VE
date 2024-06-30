@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OECD Rapport om Danmarks Økonomi Quiz - Forbedret Sci-Fi Edition med Musik</title>
+    <title>OECD Rapport om Danmarks Økonomi Quiz - Sci-Fi Edition med Musik og X-wings</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
@@ -18,6 +18,7 @@
             background-image: url('matrix_pattern.png');
             background-repeat: repeat;
             text-shadow: 0 0 5px #0f0;
+            overflow: hidden;
         }
         .quiz-container {
             background-color: rgba(0, 50, 0, 0.8);
@@ -26,6 +27,7 @@
             box-shadow: 0 0 20px #0f0;
             max-width: 600px;
             width: 100%;
+            z-index: 1;
         }
         .question {
             font-size: 1.2em;
@@ -102,6 +104,21 @@
             padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
+            z-index: 2;
+        }
+        .x-wing {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12L2 12M22 12L18 8M22 12L18 16M8 4L12 12L8 20"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            animation: fly 15s linear infinite;
+            opacity: 0.7;
+        }
+        @keyframes fly {
+            0% { transform: translate(-50px, 100vh) rotate(45deg); }
+            100% { transform: translate(calc(100vw + 50px), -100px) rotate(45deg); }
         }
     </style>
 </head>
@@ -243,6 +260,18 @@
             }
             musicPlaying = !musicPlaying;
         }
+
+        function createXWing() {
+            const xWing = document.createElement('div');
+            xWing.classList.add('x-wing');
+            xWing.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(xWing);
+            setTimeout(() => {
+                xWing.remove();
+            }, 15000);
+        }
+
+        setInterval(createXWing, 5000);
 
         renderQuestion();
 
