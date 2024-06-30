@@ -1,37 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OECD Report Quiz</title>
+    <title>OECD Rapport om Danmarks Økonomi Quiz</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Courier New', monospace;
             background: url('matrix_pattern.png') repeat;
-            color: #fff;
+            color: #0f0;
             overflow: hidden;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-shadow: 0 0 5px #0f0;
         }
         .quiz-container {
-            max-width: 600px;
-            margin: 50px auto;
+            background-color: rgba(0, 50, 0, 0.8);
+            border-radius: 8px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border-radius: 10px;
+            box-shadow: 0 0 20px #0f0;
+            max-width: 600px;
+            width: 100%;
         }
         .question {
-            margin-bottom: 20px;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #0f0;
+            padding-bottom: 10px;
         }
-        .answers {
-            list-style: none;
-            padding: 0;
+        .options {
+            display: grid;
+            gap: 10px;
         }
-        .answers li {
-            margin: 10px 0;
+        button {
+            background-color: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-shadow: 0 0 5px #0f0;
+        }
+        button:hover {
+            background-color: #0f0;
+            color: #000;
+            box-shadow: 0 0 15px #0f0;
+        }
+        button:disabled {
+            background-color: #003300;
+            color: #006600;
+            cursor: not-allowed;
+        }
+        .feedback {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        .result {
+            text-align: center;
+            font-size: 1.2em;
+            margin-top: 20px;
         }
         .progress {
-            margin: 20px 0;
+            background-color: #003300;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #0f0;
+            transition: width 0.5s ease-in-out;
+        }
+        h1 {
+            text-align: center;
+            animation: flicker 2s infinite;
+        }
+        @keyframes flicker {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .music-control {
             position: fixed;
@@ -46,27 +106,25 @@
             position: absolute;
             width: 50px;
             height: 50px;
-            background: url('xwing.png') no-repeat center center;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12L2 12M22 12L18 8M22 12L18 16M8 4L12 12L8 20"/></svg>');
             background-size: contain;
-            animation: fly 10s linear infinite;
+            background-repeat: no-repeat;
+            animation: fly 15s linear infinite;
+            opacity: 0.7;
         }
         @keyframes fly {
-            from {
-                transform: translate(-50px, -50px);
-            }
-            to {
-                transform: translate(calc(100vw + 50px), calc(100vh + 50px));
-            }
+            0% { transform: translate(-50px, 100vh) rotate(45deg); }
+            100% { transform: translate(calc(100vw + 50px), -100px) rotate(45deg); }
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
-        <div class="question"></div>
-        <ul class="answers"></ul>
-        <div class="progress"></div>
-        <button onclick="nextQuestion()">Next</button>
-        <div class="result"></div>
+        <h1>OECD Rapport om Danmarks Økonomi Quiz</h1>
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div id="quiz"></div>
     </div>
 
     <div class="music-control" onclick="toggleMusic()">
@@ -81,74 +139,111 @@
     <script>
         const questions = [
             {
-                question: "What is the GDP growth rate of Denmark in 2023?",
-                answers: ["1.5%", "2.3%", "3.1%", "0.8%"],
-                correct: "1.5%"
+                question: "Hvad er Danmarks BNP-vækstrate i 2023?",
+                options: ["1.5%", "2.3%", "3.1%", "0.8%"],
+                correctAnswer: 0
             },
             {
-                question: "What is the unemployment rate in Denmark as per the OECD report?",
-                answers: ["3.5%", "4.0%", "5.2%", "2.9%"],
-                correct: "3.5%"
+                question: "Hvad er arbejdsløshedsprocenten i Danmark ifølge OECD-rapporten?",
+                options: ["3.5%", "4.0%", "5.2%", "2.9%"],
+                correctAnswer: 0
             },
             {
-                question: "Which sector contributes the most to Denmark's economy?",
-                answers: ["Agriculture", "Manufacturing", "Services", "Technology"],
-                correct: "Services"
+                question: "Hvilken sektor bidrager mest til Danmarks økonomi?",
+                options: ["Landbrug", "Produktion", "Service", "Teknologi"],
+                correctAnswer: 2
             },
             {
-                question: "What is the inflation rate in Denmark?",
-                answers: ["1.2%", "0.5%", "1.8%", "2.0%"],
-                correct: "1.2%"
+                question: "Hvad er inflationsraten i Danmark?",
+                options: ["1.2%", "0.5%", "1.8%", "2.0%"],
+                correctAnswer: 0
             },
             {
-                question: "What is Denmark's position in the OECD ranking for quality of life?",
-                answers: ["1st", "5th", "10th", "3rd"],
-                correct: "1st"
+                question: "Hvad er Danmarks position i OECD-ranglisten for livskvalitet?",
+                options: ["1.", "5.", "10.", "3."],
+                correctAnswer: 0
             }
         ];
 
         let currentQuestion = 0;
         let score = 0;
+        let quizEnded = false;
         let musicPlaying = false;
         const music = document.getElementById('backgroundMusic');
         const musicIcon = document.getElementById('musicIcon');
 
         function renderQuestion() {
-            const questionElement = document.querySelector('.question');
-            const answersElement = document.querySelector('.answers');
-            const progressElement = document.querySelector('.progress');
+            const quizContainer = document.getElementById('quiz');
+            const question = questions[currentQuestion];
 
-            questionElement.textContent = questions[currentQuestion].question;
-            answersElement.innerHTML = '';
-            questions[currentQuestion].answers.forEach(answer => {
-                const li = document.createElement('li');
-                li.textContent = answer;
-                li.onclick = () => selectAnswer(answer);
-                answersElement.appendChild(li);
-            });
+            let html = `
+                <div class="fade-in">
+                    <div class="question">${question.question}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectAnswer(${index})">${option}</button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback" class="feedback"></div>
+                </div>
+            `;
 
-            progressElement.textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            quizContainer.innerHTML = html;
+            updateProgressBar();
+            if (musicPlaying) music.play();
         }
 
-        function selectAnswer(answer) {
-            if (answer === questions[currentQuestion].correct) {
+        function selectAnswer(index) {
+            const feedback = document.getElementById('feedback');
+            const buttons = document.querySelectorAll('.options button');
+
+            buttons.forEach(button => button.disabled = true);
+
+            if (index === questions[currentQuestion].correctAnswer) {
                 score++;
+                feedback.textContent = 'Korrekt! Kraften er stærk i dig.';
+                feedback.style.color = '#0f0';
+            } else {
+                feedback.textContent = `Forkert. Det korrekte svar er: ${questions[currentQuestion].options[questions[currentQuestion].correctAnswer]}`;
+                feedback.style.color = '#f00';
             }
-            nextQuestion();
+
+            setTimeout(nextQuestion, 2000);
         }
 
         function nextQuestion() {
             currentQuestion++;
-            if (currentQuestion >= questions.length) {
-                showResult();
-            } else {
+            if (currentQuestion < questions.length) {
                 renderQuestion();
+            } else {
+                showResult();
             }
         }
 
         function showResult() {
-            const quizContainer = document.querySelector('.quiz-container');
-            quizContainer.innerHTML = `<h2>You scored ${score} out of ${questions.length}</h2>`;
+            const quizContainer = document.getElementById('quiz');
+            quizContainer.innerHTML = `
+                <div class="result fade-in">
+                    <h2>Quiz afsluttet!</h2>
+                    <p>Du fik ${score} ud af ${questions.length} rigtige.</p>
+                    <p>${score === questions.length ? 'Du er en sand Jedi Master!' : 'Fortsæt din træning, unge Padawan.'}</p>
+                    <button onclick="restartQuiz()">Start en ny mission</button>
+                </div>
+            `;
+            quizEnded = true;
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            quizEnded = false;
+            renderQuestion();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
         }
 
         function toggleMusic() {
@@ -162,21 +257,21 @@
             musicPlaying = !musicPlaying;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            renderQuestion();
-            document.body.addEventListener('click', function() {
-                if (!musicPlaying) toggleMusic();
-            }, { once: true });
+        function createXWing() {
+            const xWing = document.createElement('div');
+            xWing.classList.add('x-wing');
+            xWing.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(xWing);
+            setTimeout(() => {
+                xWing.remove();
+            }, 15000);
+        }
 
-            setInterval(() => {
-                const xWing = document.createElement('div');
-                xWing.className = 'x-wing';
-                xWing.style.top = `${Math.random() * 100}vh`;
-                xWing.style.left = `${Math.random() * 100}vw`;
-                document.body.appendChild(xWing);
-                setTimeout(() => xWing.remove(), 10000);
-            }, 5000);
-        });
+        setInterval(createXWing, 5000);
+
+        renderQuestion();
+
+        document.body.addEventListener('click', function() { if (!musicPlaying) toggleMusic(); }, { once: true });
     </script>
 </body>
 </html>
