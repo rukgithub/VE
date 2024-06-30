@@ -3,23 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OECD Rapport om Danmarks Økonomi Quiz - Sci-Fi Edition</title>
+    <title>OECD Rapport om Danmarks Økonomi Quiz - Forbedret Sci-Fi Edition</title>
     <style>
         body {
             font-family: 'Courier New', monospace;
             line-height: 1.6;
             color: #0f0;
             background-color: #000;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('matrix_pattern.png');
+            background-repeat: repeat;
             text-shadow: 0 0 5px #0f0;
         }
         .quiz-container {
-            background-color: rgba(0, 50, 0, 0.7);
+            background-color: rgba(0, 50, 0, 0.8);
             border-radius: 8px;
             padding: 20px;
-            box-shadow: 0 0 10px #0f0;
+            box-shadow: 0 0 20px #0f0;
+            max-width: 600px;
+            width: 100%;
         }
         .question {
             font-size: 1.2em;
@@ -61,24 +67,41 @@
             margin-top: 20px;
         }
         .progress {
-            margin-bottom: 10px;
-            text-align: right;
-            font-style: italic;
+            background-color: #003300;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #0f0;
+            transition: width 0.5s ease-in-out;
+        }
+        h1 {
+            text-align: center;
+            animation: flicker 2s infinite;
         }
         @keyframes flicker {
             0% { opacity: 0.8; }
             50% { opacity: 1; }
             100% { opacity: 0.8; }
         }
-        h1 {
-            animation: flicker 2s infinite;
-            text-align: center;
+        .fade-in {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <div class="quiz-container">
         <h1>OECD Rapport om Danmarks Økonomi Quiz</h1>
+        <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
         <div id="quiz"></div>
     </div>
 
@@ -120,17 +143,19 @@
             const question = questions[currentQuestion];
 
             let html = `
-                <div class="progress">Spørgsmål ${currentQuestion + 1} af ${questions.length}</div>
-                <div class="question">${question.question}</div>
-                <div class="options">
-                    ${question.options.map((option, index) => `
-                        <button onclick="selectAnswer(${index})">${option}</button>
-                    `).join('')}
+                <div class="fade-in">
+                    <div class="question">${question.question}</div>
+                    <div class="options">
+                        ${question.options.map((option, index) => `
+                            <button onclick="selectAnswer(${index})">${option}</button>
+                        `).join('')}
+                    </div>
+                    <div id="feedback" class="feedback"></div>
                 </div>
-                <div id="feedback" class="feedback"></div>
             `;
 
             quizContainer.innerHTML = html;
+            updateProgressBar();
         }
 
         function selectAnswer(index) {
@@ -163,7 +188,7 @@
         function showResult() {
             const quizContainer = document.getElementById('quiz');
             quizContainer.innerHTML = `
-                <div class="result">
+                <div class="result fade-in">
                     <h2>Quiz afsluttet!</h2>
                     <p>Du fik ${score} ud af ${questions.length} rigtige.</p>
                     <p>${score === questions.length ? 'Du er en sand Jedi Master!' : 'Fortsæt din træning, unge Padawan.'}</p>
@@ -178,6 +203,12 @@
             score = 0;
             quizEnded = false;
             renderQuestion();
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar');
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
         }
 
         renderQuestion();
